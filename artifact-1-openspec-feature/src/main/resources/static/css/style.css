@@ -1,0 +1,130 @@
+/* C2 TL Artifact 1 — OpenSpec Feature UI */
+:root {
+  --ink: #0f172a;
+  --muted: #475569;
+  --line: #e2e8f0;
+  --brand: #0f172a;
+  --brand-blue: #3b82f6;
+  --bg: #f8fafc;
+  --white: #ffffff;
+  --danger: #dc2626;
+  --success: #15803d;
+}
+* { box-sizing: border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  color: var(--ink); line-height: 1.5; margin: 0; background: #f1f5f9;
+}
+a { color: var(--brand-blue); text-decoration: none; }
+a:hover { text-decoration: underline; }
+.btn {
+  padding: 0.55rem 1.1rem; border-radius: 8px; border: none; cursor: pointer;
+  font-weight: 600; font-size: 0.9rem; display: inline-block;
+}
+.btn-primary { background: var(--brand); color: #fff; }
+.btn-primary:hover { background: #1e293b; }
+.btn-outline { background: var(--white); color: var(--ink); border: 1px solid var(--line); }
+.btn-outline:hover { background: var(--bg); }
+.btn-group { display: flex; gap: 0.6rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+.form-input {
+  width: 100%; padding: 0.6rem; border: 1px solid var(--line); border-radius: 8px;
+  font-size: 0.9rem; margin-top: 0.25rem;
+}
+.error {
+  color: var(--danger); background: #fef2f2; border: 1px solid #fecaca;
+  border-radius: 8px; padding: 1rem; margin-bottom: 1rem;
+}
+.hero {
+  background: linear-gradient(135deg, var(--ink), #1e293b); color: #fff;
+  padding: 3rem 1.5rem; border-radius: 12px; margin-bottom: 2rem;
+}
+.hero h1 { margin: 0 0 0.5rem; font-size: 1.75rem; }
+.hero p { margin: 0; opacity: 0.9; font-size: 1rem; }
+.steps-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.25rem; margin-bottom: 2rem;
+}
+.step-card {
+  border: 1px solid var(--line); border-radius: 10px; padding: 1.5rem;
+  background: var(--white); box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+.step-card h3 { margin: 0 0 0.5rem; color: var(--ink); font-size: 1.05rem; }
+.step-num {
+  display: inline-block; background: var(--brand-blue); color: #fff; width: 26px;
+  height: 26px; border-radius: 50%; text-align: center; line-height: 26px;
+  font-size: 0.8rem; margin-bottom: 0.6rem;
+}
+.step-card p { color: var(--muted); font-size: 0.85rem; margin: 0.4rem 0 0; }
+.ac-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 0.9rem; margin-top: 1rem;
+}
+.ac-card {
+  border-left: 4px solid var(--brand-blue); padding: 1rem; background: var(--bg);
+  border-radius: 0 8px 8px 0; font-size: 0.85rem;
+}
+.ac-card .tag { font-weight: 700; color: var(--brand-blue); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.04em; }
+.ac-card p { margin: 0.35rem 0 0; color: var(--muted); font-size: 0.8rem; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; font-size: 0.85rem; }
+th, td { border: 1px solid var(--line); padding: 0.6rem 0.75rem; text-align: left; }
+th { background: #f1f5f9; color: var(--ink); font-size: 0.8rem; }
+tr:nth-child(even) { background: #fcfcfc; }
+.badge {
+  font-size: 0.68rem; padding: 0.12rem 0.5rem; border-radius: 4px;
+  font-weight: 700; text-transform: uppercase; color: #166534; background: #dcfce7;
+}
+.code-block {
+  background: #0f172a; color: #e2e8f0; border-radius: 8px; padding: 1rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.78rem;
+  overflow-x: auto; margin-top: 0.5rem; white-space: pre-wrap;
+}
+.json-block { background: #0f172a; color: #e2e8f0; border-radius: 8px; padding: 1rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.78rem;
+  overflow-x: auto; margin-top: 0.5rem; white-space: pre-wrap; }
+.spec-section {
+  border: 1px solid var(--line); border-radius: 10px; padding: 1.5rem;
+  margin-bottom: 1.5rem; background: var(--white);
+}
+.spec-section h2 { margin-top: 0; color: var(--ink); border-bottom: 2px solid var(--brand-blue); padding-bottom: 0.5rem; }
+.metrics {
+  display: flex; gap: 0.75rem; margin-top: 1rem; flex-wrap: wrap;
+}
+.metric {
+  background: #f1f5f9; border-radius: 8px; padding: 0.75rem 1rem; text-align: center; flex: 1; min-width: 110px;
+}
+.metric .val { font-size: 1.5rem; font-weight: 700; color: var(--ink); }
+.metric .lbl { font-size: 0.7rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.03em; }
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+@media (max-width: 768px) { .two-col { grid-template-columns: 1fr; } }
+.rule {
+  color: var(--muted); font-size: 0.8rem; border-top: 1px solid var(--line);
+  padding-top: 1rem; margin-top: 2rem; background: var(--bg); border-radius: 8px; padding: 1rem;
+}
+.status-done { color: var(--success); font-weight: 600; }
+
+/* Step-by-step result cards */
+.steps-container { display: flex; flex-direction: column; gap: 1.25rem; }
+.step-card {
+  border: 1px solid var(--line); border-radius: 10px; background: var(--white);
+  overflow: hidden; box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+}
+.step-header {
+  padding: 1rem 1.25rem; background: var(--bg); border-bottom: 1px solid var(--line);
+  display: flex; justify-content: space-between; align-items: center;
+}
+.step-header h3 { margin: 0; font-size: 0.95rem; color: var(--ink); display: flex; align-items: center; gap: 0.5rem; }
+.step-badge { background: var(--brand-blue); color: #fff; padding: 0.12rem 0.55rem; border-radius: 6px; font-size: 0.72rem; }
+.step-body { padding: 1.25rem; display: none; }
+.step-body.open { display: block; }
+.collapse-btn { background: none; border: none; color: var(--brand-blue); font-weight: 600; font-size: 0.85rem; cursor: pointer; }
+.collapse-btn:hover { text-decoration: underline; }
+.section-label { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); margin-top: 0.75rem; margin-bottom: 0.3rem; }
+.finding-row {
+  border: 1px solid var(--line); border-radius: 8px; padding: 0.75rem; margin-bottom: 0.75rem; background: var(--white);
+}
+.finding-row .cat { font-weight: 700; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.04em; }
+.finding-row .grounded { color: var(--success); }
+.finding-row .unverified { color: var(--danger); }
+.nav-pill { display: inline-flex; gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap; }
+.nav-pill a { padding: 0.4rem 0.9rem; border-radius: 6px; border: 1px solid var(--line); font-size: 0.85rem; color: var(--ink); }
+.nav-pill a:hover { background: var(--bg); }

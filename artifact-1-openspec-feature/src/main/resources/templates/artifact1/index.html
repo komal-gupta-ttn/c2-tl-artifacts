@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Artifact 1 — OpenSpec-Driven Feature Delivery</title>
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
+</head>
+<body>
+<div class="hero">
+    <h1>Artifact 1 — OpenSpec-Driven Feature Delivery</h1>
+    <p>SE/SSE base C2 expectation: run feature delivery through a spec-first workflow (OpenSpec/Speckit),
+       self-review AI-generated code/tests against acceptance criteria, maintain traceability spec → task → code → PR.</p>
+</div>
+
+<div class="steps-grid">
+    <div class="step-card">
+        <div class="step-num">1</div>
+        <h3>Spec &amp; Acceptance Criteria</h3>
+        <p>OpenSpec spec with testable acceptance criteria, NFRs, and atomic task breakdown (T-01…T-06).</p>
+    </div>
+    <div class="step-card">
+        <div class="step-num">2</div>
+        <h3>Prompt Engineering</h3>
+        <p>Structured output (JSON schema), few-shot examples, self-critique prompting — not ad hoc prompts.</p>
+    </div>
+    <div class="step-card">
+        <div class="step-num">3</div>
+        <h3>Step-by-Step Demo</h3>
+        <p>Input diff → AI generation → self-critique → grounded review summary, with every step visible.</p>
+    </div>
+    <div class="step-card">
+        <div class="step-num">4</div>
+        <h3>Traceability Matrix</h3>
+        <p>Spec ref → acceptance criterion → task → commit → PR → tests, all linked and visible.</p>
+    </div>
+</div>
+
+<div class="btn-group">
+    <a th:href="@{/artifact1/spec}" class="btn btn-primary">View OpenSpec Spec</a>
+    <a th:href="@{/artifact1/demo}" class="btn btn-primary">Run Step-by-Step Demo</a>
+    <a th:href="@{/artifact1/traceability}" class="btn btn-outline">View Traceability Matrix</a>
+</div>
+
+<div class="ac-grid">
+    <div class="ac-card"><div class="tag">AC-01</div><p>Review summary generated from PR diff (structured output)</p></div>
+    <div class="ac-card"><div class="tag">AC-02</div><p>Invalid/malformed diff returns error, never crashes</p></div>
+    <div class="ac-card"><div class="tag">AC-03</div><p>Review completes within 2s for diffs &lt; 500 lines</p></div>
+    <div class="ac-card"><div class="tag">AC-04</div><p>Findings grounded in actual diff lines (no hallucination)</p></div>
+</div>
+
+<div class="rule">
+    <strong>Tech:</strong> Java 17 · Spring Boot 3 · Thymeleaf UI · Maven · JUnit 5<br/>
+    <strong>Prompt techniques:</strong> structured output · few-shot · self-critique · chaining (no agent loop)<br/>
+    <strong>C2 band:</strong> SE/SSE base (inherited by TL)
+</div>
+</body>
+</html>

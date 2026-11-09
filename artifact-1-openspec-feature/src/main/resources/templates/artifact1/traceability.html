@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Traceability Matrix — Artifact 1</title>
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
+</head>
+<body>
+<div class="trace-page">
+    <a th:href="@{/artifact1}" class="btn btn-outline">← Back</a>
+    <h1>Traceability Matrix — Spec → Task → Code → PR → Tests</h1>
+
+    <table>
+        <thead>
+        <tr><th>Spec Ref</th><th>Acceptance Criterion</th><th>Task ID</th><th>Commit</th><th>PR</th><th>Tests</th><th>Status</th></tr>
+        </thead>
+        <tbody>
+        <tr th:each="row : ${traceability}">
+            <td>[[${row.specRef}]]</td>
+            <td>[[${row.acceptanceCriterion}]]</td>
+            <td><strong>[[${row.taskId}]]</strong></td>
+            <td>[[${row.commit}]]</td>
+            <td>[[${row.pr}]]</td>
+            <td>[[${row.tests}]]</td>
+            <td><span class="badge" th:text="${row.status}">✅</span></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div class="rule">
+        <strong>Traceability rule:</strong> every commit message references a task ID; every PR links back to the spec.<br/>
+        <strong>Example commit:</strong><br/>
+        <code>feat: implement T-02 — review summary generator</code><br/>
+        <code>Spec: spec/feature-spec.md</code><br/>
+        <code>Task: T-02</code><br/>
+        <code>AC: AC-01, AC-04</code>
+    </div>
+
+    <div class="btn-group" style="margin-top:1.5rem;">
+        <a th:href="@{/artifact1}" class="btn btn-outline">Back to Overview</a>
+        <a th:href="@{/artifact1/demo}" class="btn btn-primary">Run Demo</a>
+    </div>
+</div>
+</body>
+</html>

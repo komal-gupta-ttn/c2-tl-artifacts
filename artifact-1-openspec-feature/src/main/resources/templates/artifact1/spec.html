@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Spec — Artifact 1</title>
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
+</head>
+<body>
+<div class="spec-page">
+    <a th:href="@{/artifact1}" class="btn btn-outline">← Back</a>
+    <h1>OpenSpec Spec — Artifact 1</h1>
+
+    <div class="spec-section">
+        <h2>1. Problem Statement</h2>
+        <p>AI-assisted code review summary generator: given a unified PR diff, produce a structured review summary
+           (security, performance, style, test coverage) grounded in actual diff lines. Built entirely through an
+           OpenSpec-driven flow — spec → task breakdown → AI-generated implementation → self-review → PR.</p>
+    </div>
+
+    <div class="spec-section">
+        <h2>2. Acceptance Criteria (testable)</h2>
+        <table>
+            <thead><tr><th>ID</th><th>Criterion</th><th>Verification</th></tr></thead>
+            <tbody>
+            <tr><td><strong>AC-01</strong></td><td>Review summary generated from PR diff (structured output)</td><td>TestAC01_StructuredOutput</td></tr>
+            <tr><td><strong>AC-02</strong></td><td>Invalid/malformed diff returns error, never crashes</td><td>TestAC02_InvalidInput</td></tr>
+            <tr><td><strong>AC-03</strong></td><td>Review completes within 2s for diffs &lt; 500 lines</td><td>TestAC03_Performance</td></tr>
+            <tr><td><strong>AC-04</strong></td><td>Findings grounded in actual diff lines (no hallucination)</td><td>TestAC04_GroundedFindings</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="spec-section">
+        <h2>3. Non-Functional Requirements</h2>
+        <ul>
+            <li><strong>Performance:</strong> p95 &lt; 2s for diffs &lt; 500 lines</li>
+            <li><strong>Reliability:</strong> invalid input returns 400 with error message, never crashes</li>
+            <li><strong>Observability:</strong> duration and grounding ratio logged per review</li>
+            <li><strong>Security:</strong> no secrets echoed back in review output</li>
+        </ul>
+    </div>
+
+    <div class="spec-section">
+        <h2>4. Task Breakdown (atomic, independently verifiable)</h2>
+        <table>
+            <thead><tr><th>Task ID</th><th>Description</th><th>Definition of Done</th><th>Status</th></tr></thead>
+            <tbody>
+            <tr th:each="t : ${tasks}">
+                <td><strong>[[${t.id}]]</strong></td>
+                <td>[[${t.description}]]</td>
+                <td>[[${t.acceptance}]]</td>
+                <td><span class="status-done">[[${t.status}]]</span></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="spec-section">
+        <h2>5. Prompt Template (structured output + few-shot)</h2>
+        <div class="code-block">[[${promptTemplate}]]</div>
+    </div>
+
+    <div class="spec-section">
+        <h2>6. Self-Critique Prompt (T-05 self-review)</h2>
+        <div class="code-block">[[${selfCritiquePrompt}]]</div>
+    </div>
+
+    <div class="spec-section">
+        <h2>7. Coding Standards (spec input)</h2>
+        <div class="code-block">[[${standards}]]</div>
+    </div>
+
+    <div class="btn-group" style="margin-top:1.5rem;">
+        <a th:href="@{/artifact1/demo}" class="btn btn-primary">Run Step-by-Step Demo</a>
+        <a th:href="@{/artifact1}" class="btn btn-outline">Back to Overview</a>
+    </div>
+</div>
+</body>
+</html>

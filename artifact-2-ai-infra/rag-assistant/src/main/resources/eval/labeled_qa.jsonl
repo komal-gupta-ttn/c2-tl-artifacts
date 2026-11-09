@@ -1,0 +1,5 @@
+{"question": "How does the auth service handle token refresh?", "expected_source": "auth_service.md", "expected_keywords": ["refresh", "token", "auth"]}
+{"question": "What is the rate limit for the payments API?", "expected_source": "api_rate_limits.md", "expected_keywords": ["rate limit", "payments", "requests per"]}
+{"question": "How do I deploy a new service to staging?", "expected_source": "deployment_guide.md", "expected_keywords": ["deploy", "staging", "pipeline"]}
+{"question": "What database does the inventory service use?", "expected_source": "services/inventory.md", "expected_keywords": ["inventory", "database", "postgres"]}
+{"question": "How are secrets managed in production?", "expected_source": "security/secrets.md", "expected_keywords": ["secrets", "production", "vault"]}

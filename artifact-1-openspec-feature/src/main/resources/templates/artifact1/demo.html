@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Step-by-Step Demo — Artifact 1</title>
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
+</head>
+<body>
+<div class="demo-page">
+    <a th:href="@{/artifact1}" class="btn btn-outline" style="text-decoration:none;">← Back</a>
+    <h1>Step-by-Step Transformation Demo</h1>
+    <p class="sample-note">Enter a unified diff (or use the sample) to see each transformation step: input → prompt → AI generation → self-critique → final review summary → traceability.</p>
+
+    <div th:if="${error}" class="error">[[${error}]]</div>
+
+    <div class="form-card">
+        <h2>Step 1 — Input: Unified PR Diff</h2>
+        <form th:action="@{/artifact1/generate}" th:object="${diffInput}" method="post">
+            <label for="prId">PR ID</label>
+            <input type="text" id="prId" th:field="*{prId}" class="form-input" value="PR-DEMO"/>
+            <label for="diff">Unified Diff</label>
+            <textarea id="diff" th:field="*{diff}" placeholder="Paste a unified diff here…">diff --git a/src/auth.py b/src/auth.py
+new file mode 100644
+--- /dev/null
++++ b/src/auth.py
+@@ -0,0 +1,5 @@
++password = "hardcoded_secret_123"
++def login(user):
++    for i in range(len(users)):
++        if users[i] == user:
++            return True
++    return False</textarea>
+            <div class="sample-note">Sample diff contains a hardcoded credential (security), range(len()) anti-pattern (performance), and a public function without tests (test-coverage).</div>
+            <button type="submit" class="btn btn-primary">Generate Review Summary</button>
+            <a th:href="@{/artifact1}" class="btn btn-outline" style="text-decoration:none;margin-left:0.5rem;">Cancel</a>
+        </form>
+    </div>
+</div>
+<script th:src="@{/js/app.js}"></script>
+</body>
+</html>
