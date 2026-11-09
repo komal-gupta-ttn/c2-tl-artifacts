@@ -1,0 +1,29 @@
+# Vector store configuration — Artifact 2 RAG assistant
+# Options: ChromaDB (local dev) or PGVector (production)
+
+store:
+  type: chromadb          # chromadb | pgvector
+  path: ./index/chroma_db
+  collection: project_docs
+
+embedding:
+  model: nomic-embed-text    # nomic-embed-text (Ollama) | titan-embed-text (Bedrock)
+  provider: ollama           # ollama | bedrock
+  dim: 384
+  normalize: true            # cosine-similarity ready
+
+chunking:
+  strategy: recursive_semantic   # fixed_size | paragraphs | recursive_semantic
+  max_chunk_size: 600
+  overlap: 50
+
+retrieval:
+  top_k: 5
+  min_similarity: 0.3
+  hybrid: true           # keyword + semantic boost
+  rerank: true           # section match + length penalty
+
+cost_aware:
+  cache_repeated_queries: true
+  prompt_cache_system_prompt: true   # cache static RAG system-prompt portions
+  cache_ttl_seconds: 3600
