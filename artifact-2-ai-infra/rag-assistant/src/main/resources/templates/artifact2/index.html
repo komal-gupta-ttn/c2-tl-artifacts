@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Artifact 2 — RAG-Backed Assistant (TL)</title>
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
+</head>
+<body>
+<div class="hero">
+    <h1>Artifact 2 — RAG-Backed Assistant</h1>
+    <p>TL differentiator: shared AI infrastructure for the project team. A RAG-backed assistant over docs/codebase that
+       answers natural-language questions with grounded answers and source citations. Built &amp; demonstrated.</p>
+</div>
+
+<div class="steps-grid">
+    <div class="step-card">
+        <div class="step-num">1</div>
+        <h3>Embeddings &amp; Vector Search</h3>
+        <p>Dense vectors, cosine similarity; Ollama nomic-embed-text / Bedrock Titan; PGVector or ChromaDB indexing.</p>
+    </div>
+    <div class="step-card">
+        <div class="step-num">2</div>
+        <h3>Chunking &amp; Retrieval</h3>
+        <p>Recursive/semantic chunking, metadata enrichment, top-K, hybrid keyword+semantic, re-ranking.</p>
+    </div>
+    <div class="step-card">
+        <div class="step-num">3</div>
+        <h3>RAG Architecture &amp; Eval</h3>
+        <p>query → embed → retrieve → assemble → generate with citations; lightweight eval harness (precision/recall, accuracy).</p>
+    </div>
+    <div class="step-card">
+        <div class="step-num">4</div>
+        <h3>Step-by-Step Pipeline UI</h3>
+        <p>Every transformation visible: docs → chunk → embed → store → query → retrieve → re-rank → generate → citations → eval.</p>
+    </div>
+</div>
+
+<div class="btn-group">
+    <a th:href="@{/artifact2/pipeline}" class="btn btn-primary">View Pipeline Steps</a>
+    <a th:href="@{/artifact2/query}" class="btn btn-primary">Ask a Question (Demo)</a>
+    <a th:href="@{/artifact2/eval}" class="btn btn-outline">View Evaluation Metrics</a>
+</div>
+
+<div class="rule">
+    <strong>TL expectations addressed:</strong> build &amp; run shared AI infrastructure · be the go-to person for AI tooling · support pre-PR teammate review<br/>
+    <strong>Tech:</strong> Java 17 · Spring Boot 3 · Thymeleaf UI · Maven · JUnit 5<br/>
+    <strong>Evidence:</strong> "A working RAG-backed tool ... built and demonstrated."
+</div>
+</body>
+</html>

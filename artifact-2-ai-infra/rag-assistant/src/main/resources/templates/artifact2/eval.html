@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Evaluation Metrics — Artifact 2</title>
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
+</head>
+<body>
+<div style="max-width:900px;margin:0 auto;padding:1rem;">
+    <a th:href="@{/artifact2}" class="btn btn-outline" style="text-decoration:none;">← Back</a>
+    <h1>RAG Evaluation Metrics</h1>
+    <p>Lightweight eval harness per C2 TL requirements (TL row 10: RAG Architecture &amp; Evaluation). Runs against a labeled Q&amp;A set.</p>
+
+    <div class="metrics">
+        <div class="metric"><div class="val" th:text="${metrics.totalQuestions}">0</div><div class="lbl">Questions</div></div>
+        <div class="metric"><div class="val" th:text="${#numbers.format(metrics.retrievalHitRate, '#.000')}">0.000</div><div class="lbl">Retrieval Hit Rate</div></div>
+        <div class="metric"><div class="val" th:text="${#numbers.format(metrics.answerAccuracy, '#.000')}">0.000</div><div class="lbl">Answer Accuracy</div></div>
+        <div class="metric"><div class="val" th:text="${#numbers.format(metrics.citationValidity, '#.000')}">0.000</div><div class="lbl">Citation Validity</div></div>
+        <div class="metric"><div class="val" th:text="${#numbers.format(metrics.avgPrecisionAtK, '#.000')}">0.000</div><div class="lbl">Avg Precision@K</div></div>
+        <div class="metric"><div class="val" th:text="${#numbers.format(metrics.avgRecallAtK, '#.000')}">0.000</div><div class="lbl">Avg Recall@K</div></div>
+    </div>
+
+    <div style="margin-top:2rem;">
+        <h3>Labeled Q&amp;A Set</h3>
+        <table class="table-wrap">
+            <thead><tr><th>Question</th><th>Expected Source</th><th>Expected Keywords</th></tr></thead>
+            <tbody>
+            <tr><td>How does the auth service handle token refresh?</td><td>auth_service.md</td><td>refresh, token, auth</td></tr>
+            <tr><td>What is the rate limit for the payments API?</td><td>api_rate_limits.md</td><td>rate limit, payments, requests per</td></tr>
+            <tr><td>How do I deploy a new service to staging?</td><td>deployment_guide.md</td><td>deploy, staging, pipeline</td></tr>
+            <tr><td>What database does the inventory service use?</td><td>services/inventory.md</td><td>inventory, database, postgres</td></tr>
+            <tr><td>How are secrets managed in production?</td><td>security/secrets.md</td><td>secrets, production, vault</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="rule">
+        <strong>Metrics explained:</strong><br/>
+        • <strong>Retrieval hit rate:</strong> fraction of questions where the expected source doc appears in top-K results.<br/>
+        • <strong>Answer accuracy:</strong> fraction where ≥50% of expected keywords appear in the generated answer.<br/>
+        • <strong>Citation validity:</strong> fraction where every cited chunk ID exists in the retrieved set (catches hallucinated citations).<br/>
+        • <strong>Precision@K / Recall@K:</strong> retrieval quality measures.
+    </div>
+
+    <div class="btn-group" style="margin-top:1.5rem;">
+        <a th:href="@{/artifact2/query}" class="btn btn-primary">Ask a Question</a>
+        <a th:href="@{/artifact2}" class="btn btn-outline">Back to Overview</a>
+    </div>
+</div>
+</body>
+</html>

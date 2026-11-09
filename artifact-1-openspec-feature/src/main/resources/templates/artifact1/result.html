@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Review Summary Result — Artifact 1</title>
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
+</head>
+<body>
+<div class="result-page">
+    <div class="nav-pill">
+        <a th:href="@{/artifact1}" style="text-decoration:none;">← Overview</a>
+        <a th:href="@{/artifact1/spec}" style="text-decoration:none;">Spec</a>
+        <a th:href="@{/artifact1/demo}" style="text-decoration:none;">Demo</a>
+    </div>
+
+    <h1>Step-by-Step Transformation — PR <span th:text="${diffInput.prId}"></span></h1>
+
+    <!-- Metrics -->
+    <div class="metrics">
+        <div class="metric"><div class="val" th:text="${summary.filesChanged}">0</div><div class="lbl">Files Changed</div></div>
+        <div class="metric"><div class="val" th:text="${summary.totalFindings}">0</div><div class="lbl">Total Findings</div></div>
+        <div class="metric"><div class="val" th:text="${summary.groundedCount}">0</div><div class="lbl">Grounded</div></div>
+        <div class="metric"><div class="val" th:text="${summary.durationMs}">0</div><div class="lbl">Duration (ms)</div></div>
+    </div>
+
+    <div class="steps-container">
+
+        <!-- Step 1: Input -->
+        <div class="step-card">
+            <div class="step-header">
+                <h3><span class="step-badge">STEP 1</span> Input: Unified PR Diff</h3>
+                <button class="collapse-btn">▼</button>
+            </div>
+            <div class="step-body open">
+                <div class="section-label">Raw unified diff submitted for review</div>
+                <div class="code-block" th:text="${diffInput.diff}">diff --git ...</div>
+            </div>
+        </div>
+
+        <!-- Step 2: Prompt -->
+        <div class="step-card">
+            <div class="step-header">
+                <h3><span class="step-badge">STEP 2</span> Prompt Template Applied</h3>
+                <button class="collapse-btn">▼</button>
+            </div>
+            <div class="step-body">
+                <div class="section-label">Structured output (JSON schema) + few-shot + coding standards</div>
+                <div class="json-block">
+                    {
+  "technique": "structured_output + few_shot + self_critique",
+  "schema": { "findings": [{ "category": "security|performance|style|test-coverage", "severity": "high|medium|low", "file": "string", "line": "integer|null", "message": "string", "suggestion": "string|null", "grounded": "boolean" }], "summary_md": "string" },
+  "constraints": [ "every finding grounded in actual diff line", "no hallucinated file paths or line numbers", "cap at 50 findings" ]
+}
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 3: AI Generation -->
+        <div class="step-card">
+            <div class="step-header">
+                <h3><span class="step-badge">STEP 3</span> AI Generation (Structured Output)</h3>
+                <button class="collapse-btn">▼</button>
+            </div>
+            <div class="step-body">
+                <div class="section-label">Raw structured findings before self-critique grounding</div>
+                <div class="json-block" th:text="${#strings.replace(summary.summaryMarkdown, '&quot;', '"')}">{ demo JSON output }</div>
+            </div>
+        </div>
+
+        <!-- Step 4: Self-Critique -->
+        <div class="step-card">
+            <div class="step-header">
+                <h3><span class="step-badge">STEP 4</span> Self-Critique &amp; Grounding</h3>
+                <button class="collapse-btn">▼</button>
+            </div>
+            <div class="step-body">
+                <div class="section-label">Ungrounded findings filtered; each finding verified against real diff lines</div>
+                <div th:each="f : ${summary.findings}" class="finding-row">
+                    <span class="cat" th:text="${f.category}">security</span>
+                    <span style="float:right;" th:class="${f.grounded} ? 'grounded' : 'unverified'" th:text="${f.grounded} ? 'grounded' : 'UNVERIFIED'">grounded</span>
+                    <div style="margin-top:0.35rem;"><strong th:text="${f.file} + ':' + ${f.line}">auth.py:2</strong> — <span th:text="${f.message}">Finding message</span></div>
+                    <div th:if="${f.suggestion}" style="margin-top:0.25rem;color:#475569;font-size:0.85rem;">Suggestion: <span th:text="${f.suggestion}"></span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 5: Final Summary -->
+        <div class="step-card">
+            <div class="step-header">
+                <h3><span class="step-badge">STEP 5</span> Final Review Summary (Markdown)</h3>
+                <button class="collapse-btn">▼</button>
+            </div>
+            <div class="step-body">
+                <div class="section-label">Rendered review summary ready to post on the PR</div>
+                <div class="code-block" th:text="${summary.summaryMarkdown}"># Code Review Summary ...</div>
+                <button class="btn btn-outline" style="margin-top:0.75rem;" onclick="copyToClipboard('summary-md')">Copy Markdown</button>
+                <div id="summary-md" th:text="${summary.summaryMarkdown}" style="display:none;"></div>
+            </div>
+        </div>
+
+        <!-- Step 6: Traceability -->
+        <div class="step-card">
+            <div class="step-header">
+                <h3><span class="step-badge">STEP 6</span> Traceability (Spec → Task → Code → PR)</h3>
+                <button class="collapse-btn">▼</button>
+            </div>
+            <div class="step-body">
+                <div class="section-label">Every change traceable to a spec task ID via commit convention</div>
+                <table>
+                    <thead><tr><th>Spec Ref</th><th>Acceptance Criterion</th><th>Task ID</th><th>Commit</th><th>PR</th><th>Tests</th><th>Status</th></tr></thead>
+                    <tbody>
+                    <tr th:each="row : ${#lists.newArrayList('AC-01','AC-02','AC-03','AC-04')}">
+                        <td th:text="${#lists.contains({'AC-01','AC-02','AC-03','AC-04'}, row) ? row : row}">AC-01</td>
+                        <td th:switch="${row}">
+                            <th th:case="'AC-01'">Review summary generated from PR diff</th>
+                            <th th:case="'AC-02'">Invalid/malformed diff returns error</th>
+                            <th th:case="'AC-03'">Review completes within 2s (&lt;500 lines)</th>
+                            <th th:case="'AC-04'">Findings grounded in actual diff lines</th>
+                        </td>
+                        <td th:switch="${row}">
+                            <th th:case="'AC-01'">T-01, T-02</th>
+                            <th th:case="'AC-02'">T-03</th>
+                            <th th:case="'AC-03'">T-04</th>
+                            <th th:case="'AC-04'">T-02, T-05</th>
+                        </td>
+                        <td>a1b2c3d…</td><td>PR-123</td><td>TestAC0*</td><td><span class="badge">✅</span></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="rule">
+                    <strong>Commit convention:</strong> <code>feat: implement T-02 — review summary generator</code><br/>
+                    <strong>Spec:</strong> <code>spec/feature-spec.md</code> &nbsp;|&nbsp; <strong>Task:</strong> <code>T-02</code> &nbsp;|&nbsp; <strong>AC:</strong> <code>AC-01, AC-04</code>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="btn-group" style="margin-top:1.5rem;">
+        <a th:href="@{/artifact1/traceability}" class="btn btn-outline">Full Traceability Matrix</a>
+        <a th:href="@{/artifact1/demo}" class="btn btn-outline">Try Another Diff</a>
+    </div>
+</div>
+<script th:src="@{/js/app.js}"></script>
+</body>
+</html>

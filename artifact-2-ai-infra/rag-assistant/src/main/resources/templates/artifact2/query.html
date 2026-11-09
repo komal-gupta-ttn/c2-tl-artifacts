@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Ask a Question — Artifact 2</title>
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
+</head>
+<body>
+<div style="max-width:900px;margin:0 auto;padding:1rem;">
+    <a th:href="@{/artifact2}" class="btn btn-outline" style="text-decoration:none;">← Back</a>
+    <h1>Ask a Question (RAG Demo)</h1>
+    <p>Enter a question. The pipeline will: index docs → embed → retrieve → re-rank → generate → cite sources.</p>
+
+    <div class="form-card">
+        <form th:action="@{/artifact2/ask}" th:object="${ragQuery}" method="post">
+            <label for="question">Question</label>
+            <textarea id="question" th:field="*{question}" placeholder="e.g. How does the auth service handle token refresh?"></textarea>
+            <div class="sample-note">Try: "How does the auth service handle token refresh?" or "What is the rate limit for the payments API?"</div>
+            <label for="topK">Top-K results</label>
+            <input type="number" id="topK" th:field="*{topK}" min="1" max="20" value="5" style="width:120px;margin-top:0.25rem;"/>
+            <label for="minSimilarity">Min similarity</label>
+            <input type="number" id="minSimilarity" th:field="*{minSimilarity}" min="0" max="1" step="0.1" value="0.3" style="width:120px;margin-top:0.25rem;margin-left:1rem;"/>
+            <button type="submit" class="btn btn-primary">Run RAG Pipeline</button>
+            <a th:href="@{/artifact2}" class="btn btn-outline" style="text-decoration:none;margin-left:0.5rem;">Cancel</a>
+        </form>
+    </div>
+</div>
+<script th:src="@{/js/app.js}"></script>
+</body>
+</html>
