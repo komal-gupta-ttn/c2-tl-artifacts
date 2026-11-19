@@ -1,61 +1,74 @@
-# C2 Certification — Tech Lead Artifacts
+# C2 TL Artifacts
 
-This repository holds the two required build-and-demonstrate artefacts for the **JVM C2 Certification (AI-Integrated Competence Level)** at the **ATL + TL** band.
+This repository contains two standalone Java Spring Boot web applications and their supporting documents.
 
-> C2 = "knowing how to work differently because of AI" — AI-integrated development, embedding AI into end-to-end day-to-day workflows, not task-by-task.
+## Contents
 
-## Artefacts
+| Directory | Application |
+|-----------|-------------|
+| `artifact-1-openspec-feature/` | Code review summary tool — accepts a unified diff and produces a structured review summary (security, performance, style, test coverage) grounded in the submitted diff |
+| `artifact-2-ai-infra/rag-assistant/` | RAG-backed assistant — document ingestion pipeline (chunk → embed → store → retrieve → generate → cite → evaluate) over a sample docs corpus |
 
-| # | Artefact | Description | Location |
-|---|----------|-------------|----------|
-| 1 | **OpenSpec-driven feature delivery** | A real feature built entirely through a spec-first workflow (spec → task breakdown → AI-generated implementation → self-review → PR) with spec artifact + traceability visible. | `artifact-1-openspec-feature/` |
-| 2 | **Shared AI infrastructure (TL differentiator)** | A working RAG-backed assistant over docs/codebase **or** a deterministic multi-tool MCP chain, built and demonstrated for the project team. | `artifact-2-ai-infra/` |
+Both apps are built with Java 17+, Spring Boot 3.2.5, Thymeleaf, and Maven. Each is a standalone runnable JAR.
 
-## TL expectations (cumulative — SE/SSE base + TL additions)
-
-**Inherited from SE/SSE:**
-1. Run feature/bug delivery through a spec-first workflow (OpenSpec/Speckit) integrated with project Rules/Skills/MCP setup.
-2. Self-review and iterate AI-generated code/tests against spec acceptance criteria before raising a PR.
-3. Apply prompt-engineering techniques (chaining, caching-aware prompting, structured output) instead of single ad hoc prompts.
-
-**TL additions:**
-1. Review teammates' specs and AI-assisted output before it reaches a PR.
-2. Build and run shared AI infrastructure (RAG assistant or multi-tool MCP chain).
-3. Be the go-to person when the project's AI tooling breaks or needs extending.
-
-## Key dates
-
-| Milestone | Date |
-|---|---|
-| C2 program kicked off | 14 Aug 2026 |
-| Course completions due | **25 Sep 2026** |
-| Hands-on / project application | ~2 months after 25 Sep |
-
-## Growth objective
-
-Add **"Completion of mandatory C2 courses/certification"** as a Growth Objective for this cycle on the Growth App. Upload certificates and links to your AI exercise/POC on the Growth App.
-
-## Contacts
-
-- Manoj Mohan (Lead – Technology)
-- Ashish Kutty
-- Shobhit Kumar
-
-## Run both artifacts (Java runtime)
+## Build and run
 
 Prerequisite: Java 17+ and Maven.
 
+From the repository root:
+
 ```bash
-cd c2-tl-artifacts
 ./run-artifacts-runtime.sh
 ```
 
-Stop:
+This builds both apps with Maven (`clean test package`) and starts them:
+
+- Artifact 1: `http://localhost:8081/artifact1`
+- Artifact 2: `http://localhost:8082/artifact2`
+
+Logs are written to `/tmp/artifact1.log` and `/tmp/artifact2.log`.
+
+Stop both apps:
 
 ```bash
 ./stop-artifacts-runtime.sh
 ```
 
----
+To build and run each app individually:
 
-*Source: `C2-Certification-Research-TechLead.md`, `JVM _ AI Adoption - C2 Certification Kick Off.eml`, `JVM - GenAI - C2 - Expectations and Guidelines.xlsx`*
+```bash
+# Artifact 1
+cd artifact-1-openspec-feature
+mvn clean test package
+java -jar target/artifact-1-openspec-feature-1.0.0.jar
+```
+
+```bash
+# Artifact 2
+cd artifact-2-ai-infra/rag-assistant
+mvn clean test package
+java -jar target/artifact-2-rag-assistant-1.0.0.jar
+```
+
+## Key paths
+
+**Artifact 1** (`artifact-1-openspec-feature/`):
+- `spec/feature-spec.md` — feature specification and acceptance criteria
+- `tasks/task-breakdown.md` — task decomposition
+- `traceability.md` — spec → task → code → test traceability matrix
+- `src/main/java/com/ttn/c2/artifact1/` — application code
+- `src/main/resources/templates/artifact1/` — Thymeleaf UI templates
+- `src/test/java/com/ttn/c2/artifact1/` — unit tests
+- `pom.xml` — Maven build
+
+**Artifact 2** (`artifact-2-ai-infra/rag-assistant/`):
+- `src/main/java/com/ttn/c2/artifact2/rag/` — application code (controllers, services, models)
+- `src/main/resources/templates/artifact2/` — Thymeleaf UI templates
+- `src/main/resources/static/docs/` — sample document corpus
+- `src/test/java/com/ttn/c2/artifact2/rag/` — unit tests
+- `pom.xml` — Maven build
+
+## Scripts
+
+- `run-artifacts-runtime.sh` — builds and starts both applications
+- `stop-artifacts-runtime.sh` — stops both applications using their PID files
